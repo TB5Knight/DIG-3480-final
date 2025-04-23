@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody m_Rigidbody;
     AudioSource m_AudioSource;
     Vector3 m_Movement;
-    Quaternion m_Rotation = Quaternion.identity;
+    Quaternion m_Rotation = Quaternion.identity; 
 
     void Start ()
     {
@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody> ();
         m_AudioSource = GetComponent<AudioSource> ();
     }
+
 
     void FixedUpdate ()
     {
@@ -46,6 +47,13 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation (desiredForward);
+
+        //for sprint
+        if (Input.GetKey(KeyCode.Space))
+        {
+            m_Movement *= 3.5f; 
+        }
+
     }
 
     void OnAnimatorMove ()

@@ -12,11 +12,21 @@ public class GameEnding : MonoBehaviour
     public AudioSource exitAudio;
     public CanvasGroup caughtBackgroundImageCanvasGroup;
     public AudioSource caughtAudio;
+    //public AudioSource gameOverAudio;
+
+    public GameObject gameOverText;
+    public GameObject restartText;
+    private bool gameOver;
 
     bool m_IsPlayerAtExit;
     bool m_IsPlayerCaught;
     float m_Timer;
     bool m_HasAudioPlayed;
+
+    void Start()
+    {
+        gameOver = false;
+    }
     
     void OnTriggerEnter (Collider other)
     {
@@ -41,6 +51,22 @@ public class GameEnding : MonoBehaviour
         {
             EndLevel (caughtBackgroundImageCanvasGroup, true, caughtAudio);
         }
+
+        
+        //game over
+        if(gameOver && Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }        
+    }
+
+    public void GameOver()
+    {
+        gameOverText.SetActive(true);
+        restartText.SetActive(true);
+        gameOver = true;
+        CancelInvoke();
+        
     }
 
     void EndLevel (CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
